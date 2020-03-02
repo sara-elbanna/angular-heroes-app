@@ -1,0 +1,11 @@
+<p>heroes works!</p>
+
+<p>{{me.name}}</p>
+<input [(ngModel)]='me.name'/>
+<div class="heroes">
+    <div *ngFor="let hero of heroes" (click)="onSelectHero(hero)" [class.selected]="hero === selectedHero">
+        <span>{{hero.id}}</span>  <span>{{hero.name}}</span>
+    </div>   
+</div>
+
+<hero-details [hero]="selectedHero"></hero-details>
