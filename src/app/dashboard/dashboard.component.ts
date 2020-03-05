@@ -10,10 +10,10 @@ import {Hero} from '../heroes';
 export class DashboardComponent implements OnInit {
 
   constructor(private heroService: HeroService) { }
-  Heroes:Hero[] = []
+  heroes:Hero[] = []
   ngOnInit(): void {
     this.heroService.getHeroes().subscribe(heroes=>{
-      this.Heroes = heroes
+      this.heroes = heroes
     })
   }
 
