@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Hero,HEROES } from '../heroes';
-import {HeroService} from '../hero.service';
 import {MessagesService} from '../messages.service';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-heroes',
@@ -14,13 +14,18 @@ export class HeroesComponent implements OnInit {
     id:1,
     name: 'sara'
   }
-  heroes : Hero[];
+  heroes:any[]
 
-  getHeroes(){
-    this.heroService.getHeroes().subscribe(heroes => this.heroes =  heroes)
+  getHeroes(): any{
+    this.api.getHeroes().subscribe(res=>{
+      this.heroes = res
+    })
+  }
+  onSearch(){
+    console.log('nnn',)
   }
 
-  constructor(private heroService : HeroService, private messagesService: MessagesService) { 
+  constructor(private api: ApiService, private messagesService: MessagesService) { 
 
   }
 

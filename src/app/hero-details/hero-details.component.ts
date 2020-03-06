@@ -2,7 +2,7 @@ import { Component, OnInit,Input } from '@angular/core';
 import {Hero} from '../heroes'
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { HeroService } from '../hero.service';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-hero-details',
@@ -12,14 +12,14 @@ import { HeroService } from '../hero.service';
 export class HeroDetailsComponent implements OnInit {
   @Input() hero: Hero;  //props
   constructor( private route: ActivatedRoute,
-    private heroService: HeroService,
+    private api: ApiService,
     private location: Location
   ) { }
 
   ngOnInit(): void {
     const heroId = this.route.snapshot.paramMap.get('id');
-    this.heroService.getHero(heroId).subscribe(hero=>{
-      this.hero = hero
+    this.api.getHeroes().subscribe(heroes=>{
+      this.hero = heroes.find(x=> x.id === heroId)
     })
   }
   goBack(): void {

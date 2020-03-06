@@ -6,10 +6,10 @@
 @html-selector: html;
 
 // -------- Colors -----------
-@primary-color: @blue-6;
-@info-color: @blue-6;
-@success-color: @green-6;
-@processing-color: @blue-6;
+@primary-color: #384b4e;
+@info-color: blue;
+@success-color: green;
+@processing-color: yellow;
 @error-color: @red-6;
 @highlight-color: @red-6;
 @warning-color: @gold-6;
@@ -682,3 +682,15 @@
 @typography-title-font-weight: 600;
 
 /* You can add global styles to this file, and also import other style files */
+.container {
+  width: 86vw;
+  max-width: 1441px;
+  margin: auto;
+  padding: 15px 0;
+}
+
+@media (max-width: 680px) {
+  .container {
+      padding: 20px 0 !important;
+  }  
+}
