@@ -14,7 +14,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { NavbarComponent } from './navbar/navbar.component';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { StoreModule } from '@ngrx/store';
+import { HeroesReducer } from './store/reducers/heroes.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { HeroesEffects } from './store/effects/heroes.effects'
+import { appReducers } from './store/reducers/app.reducer';
+// import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 
 registerLocaleData(en);
@@ -35,7 +40,9 @@ registerLocaleData(en);
     NgZorroAntdModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    HttpClientInMemoryWebApiModule
+    // StoreModule.forRoot({Heroes: HeroesReducer}),
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([HeroesEffects])
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

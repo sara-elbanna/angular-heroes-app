@@ -1,6 +1,55 @@
-<div *ngIf="hero" class="hero-details">
-    <button (click)="goBack()">go back</button>
-    <h2>{{hero.name}} Details</h2>
-    <label>Name:</label>
-    <input [(ngModel)]="hero.name"/>
+<a class="back" href="/heroes" (click)="goBack()"> <i nz-icon nzType="left" nzTheme="outline"></i> Back</a>
+
+<div class="container">
+
+    <div *ngIf="hero" class="hero-details">
+       <h2><strong>{{hero.name}}</strong> <span> Details</span> </h2> 
+       <div class="box">
+        <div class="edit"><i (click)="onClickEdit()" nz-icon nzType="edit" nzTheme="outline"></i></div>
+            <section>
+                <label>ID: </label> 
+                <span>{{hero.id}}</span>
+           </section>
+           <!-- <section>
+                <label>Name: </label> 
+                <span>{{hero.name}}</span>
+           </section> -->
+           <section>
+                <label>Username: </label> 
+                <span>{{hero.username}}</span>
+           </section>
+           <section>
+                <label>Email: </label> 
+                <span>{{hero.email}}</span>
+           </section>
+           <section>
+                <label>Website: </label> 
+                <span>{{hero.website}}</span>
+           </section>
+       </div>
+        <nz-modal [(nzVisible)]="showEditModal" nzTitle="Edit hero" (nzOnCancel)="onCancelEdit()" (nzOnOk)="saveHero()" 	>
+            <section>
+                <label>Name: </label> 
+                <input class="new-name" nz-input [(ngModel)]="editedHero.name"/>
+            </section>
+            <section>
+                <label>Username: </label> 
+                <input  nz-input [(ngModel)]="editedHero.username"/>
+           </section>
+           <section>
+                <label>Email: </label> 
+                <input  nz-input [(ngModel)]="editedHero.email"/>
+           </section>
+           <section>
+                <label>Website: </label> 
+                <input  nz-input [(ngModel)]="editedHero.website"/>
+           </section>
+        </nz-modal>
+       <!-- <section>
+        
+        <button  nz-button (click)="saveHero()">Save</button>
+       </section> -->
+       
+   </div>
+
 </div>

@@ -1,8 +1,11 @@
 import { Component, OnInit,Input } from '@angular/core';
-import {Hero} from '../heroes'
+// import {Hero} from '../heroes'
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from '../api.service';
+import { Store } from '@ngrx/store';
+import { IAppState } from '../store/states/app.state';
+import { GetHeroes, EditHero } from '../store/actions.ts/heroes.actions';
+import { selectHeroesList } from '../store/selectors/heroes.selectors';
 
 @Component({
   selector: 'app-hero-details',
@@ -10,20 +13,41 @@ import { ApiService } from '../api.service';
   styleUrls: ['./hero-details.component.less']
 })
 export class HeroDetailsComponent implements OnInit {
-  @Input() hero: Hero;  //props
-  constructor( private route: ActivatedRoute,
-    private api: ApiService,
-    private location: Location
-  ) { }
+   hero;
+   editedHero;
+   showEditModal= false;
+
+  constructor( 
+    private route: ActivatedRoute,
+    private location: Location,
+    private _store: Store<IAppState>
+  ) {
+    const heroId = this.route.snapshot.paramMap.get('id');
+    this._store.select(selectHeroesList)
+    .subscribe(list=> {
+      if(list){
+        this.hero = list.find(x=> x.id == Number(heroId))
+        this.editedHero = {...this.hero}
+      }
+    })
+   }
 
   ngOnInit(): void {
-    const heroId = this.route.snapshot.paramMap.get('id');
-    this.api.getHeroes().subscribe(heroes=>{
-      this.hero = heroes.find(x=> x.id === heroId)
-    })
+    this._store.dispatch(new GetHeroes())
   }
   goBack(): void {
     this.location.back();
+  }
+  saveHero(){
+    this._store.dispatch(new EditHero(this.editedHero))
+    this.showEditModal= false
+
+  }
+  onClickEdit(){
+    this.showEditModal= true
+  }
+  onCancelEdit(){
+    this.showEditModal= false
   }
 
 }
